@@ -1,0 +1,29 @@
+The header file is the int amount of leaves (for uncompress.cpp to
+parse and then iterate through and stop at the end of the header) 
+followed by all non-zero leaf nodes represented by their symbol and 
+count. For each leaf node, it will take a total space of 
+symbol(1 byte) + count (4 byte) = 5 bytes.
+
+BEST CASE SCENARIO: 
+In the extreme case of only one particular char (say the letter 't')
+appearing 10 million times, the header would look like in bit form
+00000000 00000000 00000000 00000001
+01110100
+00000000 10011000 10010110 10000000 
+
+The above is explained as follows:
+Number of leaves (int i = 1)
+116, the letter t, in 8 bit form
+10,000,000, the frequency of letter t, in int form (4 bytes/32 bit)
+
+The header file thus would only be 9 total bytes, much better than
+1024 bytes.
+
+WORST CASE SCENARIO: 
+However, in the other extreme case where every single ASCII symbol
+appears at least once, than for each symbol, an integer value has to 
+represent their count.  This means that the header size would be
+4 bytes (leafNodes total) + [256*(1 byte + 4 bytes)] = 1284 bytes.
+In this extreme case, this would not beat the naive solution
+of 1024 bytes. 
+
